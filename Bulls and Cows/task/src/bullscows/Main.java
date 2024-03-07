@@ -47,13 +47,12 @@ public class Main {
                 if (secretSize > 36 || secretSize < 1)
                     throw new NumberFormatException();
             } catch (NumberFormatException e){
-
                 if(secretSize > 36 || secretSize < 1){
                     System.out.println("error : can't generate a secret number with a length of " + secretSize
                             + " because there aren't enough unique digits.");
                 } else
                     System.out.println("Error: \"" + secretString + "\" isn't a valid number.");
-                System.exit(0);
+                exitGame();
             }
         } while (secretSize > 36 || secretSize < 1);
     }
@@ -64,19 +63,19 @@ public class Main {
             String possibleSymbolsFillString = sc.nextLine();
             try{
                 possibleSymbolsTill = Integer.parseInt(possibleSymbolsFillString);
-                if (possibleSymbolsTill > 36) {
-                    System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
-                    System.exit(0);
-                }
+                if (possibleSymbolsTill > 36)
+                    throw new NumberFormatException();
                 else if (possibleSymbolsTill < secretSize)
                     throw new NumberFormatException();
             } catch (NumberFormatException e){
-                if(possibleSymbolsTill < secretSize){
+                if(possibleSymbolsTill < secretSize) {
                     System.out.println("error: it's not possible to generate a code with a length of " + secretSize
                             + " with " + possibleSymbolsTill + " unique symbols.");
-                } else
+                } else if (possibleSymbolsTill > 36)
+                        System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+                else
                     System.out.println("Error: \"" + possibleSymbolsFillString + "\" isn't a valid number.");
-                System.exit(0);
+                exitGame();
             }
         } while (possibleSymbolsTill > 36);
     }
@@ -173,5 +172,9 @@ public class Main {
             bullAndCowsString = "Grade: " + cows + " cow(s).";
 
         System.out.println(bullAndCowsString);
+    }
+
+    public static void exitGame(){
+        System.exit(0);
     }
 }
